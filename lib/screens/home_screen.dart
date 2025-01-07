@@ -27,6 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void returnToHome() {
+    setState(() {
+      activeScreen = 'homeScreen';
+    });
+  }
+
   Map<String, dynamic>? weatherData;
   bool isLoading = true;
 
@@ -82,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               : ForecastScreen(
                   // forecastData: weatherData!['forecast']['forecastday'],
+                  returnToHome: returnToHome,
                   dayForecast: dayForecastDetail,
                   location: weatherData!['location']['name'],
                   feelsLike: weatherData!['current']['feelslike_c'],

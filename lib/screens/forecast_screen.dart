@@ -5,12 +5,15 @@ class ForecastScreen extends StatelessWidget {
   final dynamic dayForecast;
   final String location;
   final double feelsLike;
+  final void Function() returnToHome;
   // Constructor to accept forecast data from the previous screen
-  const ForecastScreen(
-      {super.key,
-      required this.dayForecast,
-      required this.location,
-      required this.feelsLike});
+  const ForecastScreen({
+    super.key,
+    required this.dayForecast,
+    required this.location,
+    required this.feelsLike,
+    required this.returnToHome,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,35 +94,187 @@ class ForecastScreen extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
               child: Column(
-            children: [
-              Row(
                 children: [
-                  Card.filled(
-                    color: Colors.amber,
-                    child: Column(
-                      children: [
-                        Text("Humidity"),
-                        Text("$humidity%", style: TextStyle(fontSize: 18)),
-                      ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceEvenly, // Add space between the children
+                    children: [
+                      Flexible(
+                        child: AspectRatio(
+                          aspectRatio: 1, // Ensures a square shape
+                          child: Card(
+                            color: const Color.fromARGB(255, 232, 156, 255),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    "Humidity",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "$humidity%",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10), // Gap between the cards
+                      Flexible(
+                        child: AspectRatio(
+                          aspectRatio: 1, // Ensures a square shape
+                          child: Card(
+                            color: const Color.fromARGB(255, 232, 156, 255),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    "Feels Like",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "$feelsLike°C",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    feelsLike > temp
+                                        ? "It feels warmer than the actual temperature"
+                                        : "It feels colder than the actual temperature",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceEvenly, // Add space between the children
+                    children: [
+                      Flexible(
+                        child: AspectRatio(
+                          aspectRatio: 1, // Ensures a square shape
+                          child: Card(
+                            color: const Color.fromARGB(255, 232, 156, 255),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    "Sunrise",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "$sunrise",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10), // Gap between the cards
+                      Flexible(
+                        child: AspectRatio(
+                          aspectRatio: 1, // Ensures a square shape
+                          child: Card(
+                            color: const Color.fromARGB(255, 232, 156, 255),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    "Sunset",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "$sunset",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30),
+                    child: FilledButton.icon(
+                      style: FilledButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      onPressed: returnToHome,
+                      icon: Icon(Icons.arrow_back_ios_new),
+                      label: Text("Return"),
                     ),
                   ),
-                  Card.filled(
-                    color: Colors.amber,
-                    child: Column(
-                      children: [
-                        Text("Feels Like"),
-                        Text("$feelsLike°C", style: TextStyle(fontSize: 18)),
-                        Text(feelsLike > temp
-                            ? "It feels warmer than the actual temperature"
-                            : "It feels colder than the actual temperature"),
-                      ],
-                    ),
-                  )
                 ],
-              )
-            ],
-          ))
+              ),
+            ),
+          ),
         ],
       ),
     );
